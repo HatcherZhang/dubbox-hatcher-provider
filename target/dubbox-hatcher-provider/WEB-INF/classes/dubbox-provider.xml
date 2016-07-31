@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo 
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"> 
+
+    <dubbo:application name="hatcher-spring-provider" owner="programmer" organization="dubbox"/>
+
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+
+    <!-- use tomcat server -->
+    <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
+                    extension="com.alibaba.dubbo.demo.extension.TraceInterceptor,
+                    com.alibaba.dubbo.demo.extension.TraceFilter,
+                    com.alibaba.dubbo.demo.extension.ClientTraceFilter,
+                    com.alibaba.dubbo.demo.extension.DynamicTraceBinding,
+                    com.alibaba.dubbo.demo.extension.CustomExceptionMapper,
+                    com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
+
+    <!-- use the external tomcat or other server with the servlet approach; the port and contextpath must be exactly the same as those in external server -->
+    <!--<dubbo:protocol name="rest" port="8888" contextpath="services" server="servlet"/>-->
+    
+    <dubbo:service interface="com.hatcher.cvte.service.UserService" ref="userService"  protocol="dubbo" validation="true" />
+    <bean id="userService" class="com.hatcher.cvte.service.impl.UserServiceImpl" />
+</beans>

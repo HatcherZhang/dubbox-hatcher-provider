@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hatcher.cvte.dao.UserDeptMapper" >
+  <resultMap id="BaseResultMap" type="com.hatcher.cvte.model.UserDept" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USER_CODE, DEPT_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cvte_user_dept
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByUserCode" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		select
+		DEPT_CODE
+		from cvte_user_dept
+		where USER_CODE = #{userCode,jdbcType=VARCHAR}
+  </select>
+</mapper>
